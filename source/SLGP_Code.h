@@ -1,21 +1,35 @@
 #pragma once
+#include "Common.h"
+#include "WrapRamdom.hpp"
+#include "SLGP_OperatorFunc.hpp"
 
-#include "std_lib.h"
-#include "SLGP.h"
-#include "SLGP_Problem.h"
+typedef u64 (SLGP_OperatorFunc::*func)();
 
-// オペコードの実行と生成
+typedef struct{
+	std::string name;
+	std::string symbol;
+	u64 arity_num;
+	func Do;
+} operator_set;
 
-template<typename T>
+// code単体のクラス定義
+// CodeFactoryで生成
 class SLGP_Code{
+	public:
+		std::string name;
+		std::string symbol;
+		u64 arity_num;
+		func Do;
+
 	private:
-		std::vector<T> reg;
+		std::vector<u64> arity;
 
 	public:
-		SLGP_Code(void);
-		// T operator*(const T& t1, const T& t2, const T& reg_idx) { reg.at(reg_idx) = T(t1) * T(t2); }
-		// T operator/(const T& t1, const T& t2, const T& reg_idx) { reg.at(reg_idx) = T(t1) / T(t2); }
-		// T operator%(const T& t1, const T& t2, const T& reg_idx) { reg.at(reg_idx) = T(t1) % T(t2); }
-		// T operator+(const T& t1, const T& t2, const T& reg_idx) { reg.at(reg_idx) = T(t1) + T(t2); }
-		// T operator-(const T& t1, const T& t2, const T& reg_idx) { reg.at(reg_idx) = T(t1) - T(t2); }
+		void set_arity(std::vector<u64>& arity);
+
+	public:
+		SLGP_Code();
+		void GenerateCode(std::string name, std::string symbol, u64 arity_num, func Do);
+		void PrintCode();
+		~SLGP_Code();
 };

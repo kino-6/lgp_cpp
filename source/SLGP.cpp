@@ -3,62 +3,56 @@
 SLGP::SLGP(std::string problem_file){
 	this->pop.clear();
 
-	// stunb
-	this->Nvariables = 9;
-	this->NOperators = 4;
-	this->NRegisters = 9;
-	this->NInputs    = 3;
-	this->NConstants = 2;
-	this->NIndividuals = 10;
+	// stub
+	this->NVariables 	= 9;
+	this->NOperators 	= 4;
+	this->NRegisters 	= 9;
+	this->NInputs    	= 3;
+	this->NConstants 	= 2;
+	this->NIndividuals 	= 20;
+	this->NGenes		= 10;
 
-	this->problem = SLGP_Problem(problem_file);
-
-	// gene_generator
-	this->mt.seed(42);
-	std::uniform_int_distribution<Gene> gene_generator(0x30, 0x30+this->NOperators);
-	this->new_gene = gene_generator;
+	// problem_fileはProblemクラスへ投げる
+	std::string path = problem_file;
+	// Codeクラスへオペレータ生成委譲
 }
 
-Gene SLGP::MakeGene(unsigned int kind_of_genes){
-	return (Gene)this->new_gene(this->mt);
+// 遺伝子生成
+SLGP_Code SLGP::MakeGene(){
+	return SLGP_Code();
 }
 
-Individual SLGP::MakeIndividual(unsigned int gene_num){
+// 個体生成
+Individual SLGP::MakeIndividual(){
 	Individual one;
-	one.gene.resize(gene_num);
-	for(unsigned int i=0; i<gene_num; i++){
-		one.gene.at(i) = MakeGene(this->Nvariables);
+	one.code.reserve(this->NGenes);
+
+	for(std::size_t i=0; i<one.code.capacity(); i++){
+		one.code.emplace_back();	// reserve + emplace_backでコピーコンストラクタを避ける
 	}
+
+	one.fitness = 0;
+
 	return one;
 }
 
-void SLGP::MakePopulation(unsigned int pop_size){
-	this->pop.resize(pop_size);
-	for(unsigned int i=0; i<pop_size; i++){
-		this->pop.at(i) = MakeIndividual(this->NIndividuals);
+void SLGP::PrintIndividual(u64 idx){
+	std::cout << "--- idx = " << idx << " ------------------" << std::endl;
+	for(std::size_t i=0; i<this->pop.at(idx).code.size(); i++){
+		this->pop.at(idx).code.at(i).PrintCode();
 	}
 }
 
-void SLGP::PrintIndividual(unsigned int idx){
-	try{
-		std::cout
-			<< "Genes = "
-			<< std::to_string(this->pop.at(idx).gene.size())
-			<< std::endl;
+// 集団生成
+u64 SLGP::MakePopulation(){
+	u64 best_idx = 0;
 
-		for(unsigned int i=0; i<this->pop.at(idx).gene.size(); i++){
-			std::cout << i << ": " << std::to_string(pop.at(idx).gene.at(i)) + " " << std::ends;
-			std::cout << std::endl;
-		}
-
-		std::cout
-			<< "Fitness = "
-			<< std::to_string(this->pop.at(idx).fitness)
-			<< std::endl;
-
-	}catch (const char* msg){
-		std::cerr << "some_exception: " << msg << std::endl;
+	this->pop.reserve(this->NIndividuals);
+	for(std::size_t i=0; i<this->NIndividuals; i++){
+		this->pop.emplace_back(MakeIndividual());
 	}
+
+	return best_idx;
 }
 
 SLGP::~SLGP(void){
