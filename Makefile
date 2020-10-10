@@ -23,8 +23,6 @@ DEPENDS   = $(OBJECTS:.o=.d)
 $(TARGET): $(OBJECTS) $(LIBS)
 	-mkdir -p bin
 	$(COMPILER) -o $@ $^ $(LDFLAGS)
-	# for Debug
-	$(TARGET)
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.cpp
 	-mkdir -p $(OBJDIR)

@@ -1,4 +1,6 @@
-#pragma once
+#ifndef WRAPRAMDOM_H
+#define WRAPRAMDOM_H
+
 #include "std_lib.h"
 
 // このクラスにランダム生成を押し付ける
@@ -54,3 +56,5 @@ public:
 // 遺伝子の初期化など、OpenMP活用を考慮（※プログラム終了時まで残留）
 // static は明示的に付ける（暗黙で付くが）
 static thread_local WrapRandom rnd;
+
+#endif // WRAPRAMDOM_H

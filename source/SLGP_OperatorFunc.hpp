@@ -1,3 +1,6 @@
+#ifndef SLGP_OPErATORFUNC_H
+#define SLGP_OPErATORFUNC_H
+
 #include "Common.h"
 
 class SLGP_OperatorFunc {
@@ -29,10 +32,20 @@ class SLGP_OperatorFunc {
 		}
 
 		u64 Mod(){
-			return this->arity.at(0) % this->arity.at(1);
+			if( this->arity.at(1) != 0 ){
+				return this->arity.at(0) % this->arity.at(1);
+			}else{
+				return 0;
+			}
 		}
 
 		u64 Nop(){
 			return 0;
 		}
+
+		u64 Set(){
+			return this->arity.at(0);
+		}
 };
+
+#endif // SLGP_OPErATORFUNC_H

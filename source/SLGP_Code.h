@@ -1,4 +1,6 @@
-#pragma once
+#ifndef SLGP_CODE_H
+#define SLGP_CODE_H
+
 #include "Common.h"
 #include "WrapRamdom.hpp"
 #include "SLGP_OperatorFunc.hpp"
@@ -13,23 +15,26 @@ typedef struct{
 } operator_set;
 
 // code単体のクラス定義
-// CodeFactoryで生成
 class SLGP_Code{
 	public:
 		std::string name;
 		std::string symbol;
 		u64 arity_num;
 		func Do;
-
-	private:
 		std::vector<u64> arity;
+		u64 reg_num;
+		bool is_register;
 
-	public:
-		void set_arity(std::vector<u64>& arity);
+		SLGP_OperatorFunc* m_pHandlee;
 
 	public:
 		SLGP_Code();
+		bool IsRegister(u64 idx);
+		void SetArity(std::vector<u64> arity);
+		u64 DoCode();
 		void GenerateCode(std::string name, std::string symbol, u64 arity_num, func Do);
 		void PrintCode();
 		~SLGP_Code();
 };
+
+#endif // SLGP_CODE_H

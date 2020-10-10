@@ -17,3 +17,10 @@ using i8  = std::int_fast8_t;
 template<typename T, std::size_t N>
 constexpr std::size_t arraySize(T(&)[N]) noexcept
 { return N; }
+
+#define UNUSED(x) ((void)x)
+
+// レジスタ数
+#define NREGISTERS (9)
+// 定数 0 ~ NCONSTANTS
+#define NCONSTANTS (9)

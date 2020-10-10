@@ -1,15 +1,11 @@
-#pragma once
+#ifndef SLGP_H
+#define SLGP_H
+
 #include "Common.h"
-#include "SLGP_Code.h"
+#include "SLGP_Common.h"
+#include "SLGP_Problem.h"
 
 // SLGP統括 個体単位の操作をスコープとする
-
-// 個体定義
-typedef struct {
-	std::vector<SLGP_Code> code;	/* code */
-	double fitness;					/* fitness value */
-} Individual;
-
 class SLGP
 {
 	public:
@@ -20,14 +16,23 @@ class SLGP
 		u64 NConstants;		// 定数の数
 		u64 NIndividuals;	// 個体数
 		u64 NGenes;			// 遺伝子数
+		u64 NTimes;			// 世代数
 		std::vector<Individual> pop;
+		std::vector<Individual> best;
+
+		SLGP_Problem problem;
 
 	public:
 		SLGP(std::string problem_file);
 		SLGP_Code MakeGene();
 		Individual MakeIndividual();
-		void PrintIndividual(u64 idx);
+
+		void SearchBestIndividual(u64 best_size);
+
+		void PrintIndividual(const std::vector<Individual>& pop, u64 idx, bool print_code);
 		u64 MakePopulation();
 
 		~SLGP();
 };
+
+#endif // SLGP_H

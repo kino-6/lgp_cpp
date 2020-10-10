@@ -1,4 +1,6 @@
-#pragma once
+#ifndef STD_LIB_H
+#define STD_LIB_H
+
 #include <cstddef>
 #include <limits>
 #include <climits>
@@ -67,3 +69,5 @@
 #include <future>
 
 using namespace std::literals ;
+
+#endif // STD_LIB_H
