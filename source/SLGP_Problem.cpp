@@ -14,7 +14,7 @@ SLGP_Problem::SLGP_Problem(void){
 SLGP_Problem::SLGP_Problem(std::string file_path){
 	this->LoadProblem(file_path);
 
-	// ‰¼ƒpƒ‰ƒ[ƒ^
+	// stub
 	this->NRegisters = 4;
 	this->NInputs = 0;
 	this->NConstants = 9;
@@ -46,9 +46,9 @@ int SLGP_Problem::LoadProblem(std::string file_path){
 }
 
 void SLGP_Problem::InitProblem(void){
-	// –{—ˆ‚Í xml ‚É‹Lq‚³‚ê‚½–â‘èƒf[ƒ^‚ğİ’è‚·‚é
+	// load problem from file
 
-	// Stub 101“_‚ÌSinƒf[ƒ^‚ğİ’è
+	// Stub sin data
 	unsigned int N_Data = 101;
 	this->problem_data.resize(N_Data);
 	
@@ -68,16 +68,16 @@ void SLGP_Problem::PrintProblem(void){
 	}
 }
 
-//‰‰Zq‚Ìˆø”‚ğ•]‰¿
+//ï¿½ï¿½ï¿½Zï¿½qï¿½Ìˆï¿½ï¿½ï¿½ï¿½ï¿½]ï¿½ï¿½
 // void SLGP_Problem::EvalCode(std::vector<Gene> code, std::vector<ProblemType> arg)
 // {
 // 	for (auto it = std::begin(code); it != std::end(code); ++it) {
-// 		//auto arity = this->OPdefs.at(*it);	// gene‚Íopdef‚Ìidx
+// 		//auto arity = this->OPdefs.at(*it);	// geneï¿½ï¿½opdefï¿½ï¿½idx
 // 	}
 // }
 
 
-// Register[:] ‚ğ‚·‚×‚ÄInput‚Å–„‚ß‚éA‚±‚ê‚ğInput‚Ì”‚¾‚¯À{‚·‚é
+// Register[:] ï¿½ï¿½ï¿½ï¿½ï¿½×‚ï¿½Inputï¿½Å–ï¿½ï¿½ß‚ï¿½Aï¿½ï¿½ï¿½ï¿½ï¿½Inputï¿½Ìï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½{ï¿½ï¿½ï¿½ï¿½
 // Register[:] = Input[x]
 // Output[x] = RunProgram(Register[:])
 // void SLGP_Problem::RunProgram(std::vector<Gene> gene){
@@ -86,5 +86,4 @@ void SLGP_Problem::PrintProblem(void){
 // }
 
 SLGP_Problem::~SLGP_Problem(void){
-	std::cout << "Destract SLGP_Problem" << std::endl;
 }

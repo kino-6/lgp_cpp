@@ -1,11 +1,9 @@
 #include "SLGP.h"
 
-// 解くべき問題、設定値を problem_file に記載する
-
 SLGP::SLGP(std::string problem_file){
 	this->pop.clear();
 
-	// 仮パラメータ
+	// stunb
 	this->Nvariables = 9;
 	this->NOperators = 4;
 	this->NRegisters = 9;
@@ -15,7 +13,7 @@ SLGP::SLGP(std::string problem_file){
 
 	this->problem = SLGP_Problem(problem_file);
 
-	// gene_generatorは問題ごとに生成
+	// gene_generator
 	this->mt.seed(42);
 	std::uniform_int_distribution<Gene> gene_generator(0x30, 0x30+this->NOperators);
 	this->new_gene = gene_generator;
@@ -65,5 +63,4 @@ void SLGP::PrintIndividual(unsigned int idx){
 
 SLGP::~SLGP(void){
 	this->pop.clear();
-	std::cout << "Destract SLGP" << std::endl;
 }

@@ -1,21 +1,40 @@
-CC            = g++
-CFLAGS        = -O3 -Wall
-DEST          = /bin
-LDFLAGS       = -L/src
-LIBS          = -lm
-PROGRAM       = SLGP
-OBJS          = src/main.o src/SLGP.o src/SLGP_Problem.o src/SLGP_Code.o
+COMPILER  = g++
+CFLAGS    = -g -MMD -MP -Wall -Wextra -Winit-self -Wno-missing-field-initializers -O2
+ifeq "$(shell getconf LONG_BIT)" "64"
+  LDFLAGS =
+else
+  LDFLAGS =
+endif
+LIBS      =
+INCLUDE   = -I./include
+TARGET    = ./bin/$(shell basename `readlink -f .`)
+SRCDIR    = ./source
+ifeq "$(strip $(SRCDIR))" ""
+  SRCDIR  = .
+endif
+SOURCES   = $(wildcard $(SRCDIR)/*.cpp)
+OBJDIR    = ./obj
+ifeq "$(strip $(OBJDIR))" ""
+  OBJDIR  = .
+endif
+OBJECTS   = $(addprefix $(OBJDIR)/, $(notdir $(SOURCES:.cpp=.o)))
+DEPENDS   = $(OBJECTS:.o=.d)
 
-all: $(PROGRAM)
+$(TARGET): $(OBJECTS) $(LIBS)
+	-mkdir -p bin
+	$(COMPILER) -o $@ $^ $(LDFLAGS)
 
-$(PROGRAM): $(OBJS)
-	$(CC) $(OBJS) $(LDFLAGS) $(LIBS) -o $(PROGRAM)
-	$(PROGRAM).exe
+$(OBJDIR)/%.o: $(SRCDIR)/%.cpp
+	-mkdir -p $(OBJDIR)
+	$(COMPILER) $(CFLAGS) $(INCLUDE) -o $@ -c $<
+
+all: clean $(TARGET)
 
 clean:
-	rm -f *.o *~ $(PROGRAM)
-	rm -f src/*.o src/*~ src/$(PROGRAM)
-	rm debug.log
+	-rm -f $(OBJECTS) $(DEPENDS) $(TARGET)
 
-install: $(PROGRAM)
-	install -s $(PROGRAM) $(DEST)
+run:
+	$(TARGET)
+	-python ./util/plot.py
+
+-include $(DEPENDS)

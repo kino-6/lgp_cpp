@@ -1,16 +1,12 @@
 #pragma once
 
-#include <vector>
-#include <random>
-#include <iostream>
-#include <string>
-
+#include "std_lib.h"
 #include "SLGP_Problem.h"
 
 // typedef unsigned char Code;
 // typedef union {
-// 	unsigned int gene;			/* ˆâ“`q(ƒR[ƒh‘S‘Ì) */
-// 	Code code[4];				/* ŠeƒR[ƒh */
+// 	unsigned int gene;			/* genes */
+// 	Code code[4];				/* geneã®charèª­ã¿æ›¿ãˆ */
 // } Gene;
 
 typedef unsigned int Gene;
@@ -19,11 +15,9 @@ typedef struct {
 	double fitness;				/* fitness value */
 } Individual;
 
-template<typename T, std::size_t N> // see info
-constexpr std::size_t arraySize(T(&)[N]) noexcept // below on
-{ // constexpr
-	return N; // and
-}
+template<typename T, std::size_t N>
+constexpr std::size_t arraySize(T(&)[N]) noexcept
+{ return N; }
 
 class SLGP
 {
@@ -34,12 +28,12 @@ class SLGP
 		SLGP_Problem problem;
 
 		std::vector<Individual> pop;
-		unsigned int Nvariables;	// ˆâ“`q‚Ì”
-		unsigned int NOperators;	// ‰‰Zq‚Ì”
-		unsigned int NRegisters;	// ƒŒƒWƒXƒ^[‚Ì”
-		unsigned int NInputs;	// “ü—Í•Ï”‚Ì”
-		unsigned int NConstants;	// ’è”‚Ì”
-		unsigned int NIndividuals;	// ŒÂ‘Ì‚Ì”
+		unsigned int Nvariables;	// å¤‰æ•°ã®æ•°
+		unsigned int NOperators;	// ã‚ªãƒšãƒ¬ãƒ¼ã‚¿ã®æ•°
+		unsigned int NRegisters;	// ãƒ¬ã‚¸ã‚¹ã‚¿ã®æ•°
+		unsigned int NInputs;		// Inputã®æ•°
+		unsigned int NConstants;	// å®šæ•°ã®æ•°
+		unsigned int NIndividuals;	// å€‹ä½“æ•°
 
 	public:
 		SLGP(std::string problem_file);
