@@ -2,11 +2,12 @@
 #define SLGP_COMMON
 
 #include "std_lib.h"
+#include "Common.h"
 #include "SLGP_Code.h"
 
-// 個体定義
 typedef struct {
 	std::vector<SLGP_Code> code;	/* code */
+	std::vector<reg_type> reg;		/* registers */
 	double fitness;					/* fitness value */
 } Individual;
 
